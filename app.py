@@ -6,13 +6,17 @@ from emmbeddingModel import encodeText
 
 app = Flask(__name__)
 
-CORS(True)
+CORS(app)
 
 
 @app.route("/api/embeddings", methods=["POST"])
 def create_embeddings():
-    text = request.json
-    embedding = encodeText(text["text"])
+    data = request.json
+    if not data or "text" not in data:
+        return jsonify({"error": "No text to encode"}), 401
+    if not isinstance(data["text"], str):
+        return jsonify({"error": "Text must be a string"}), 401
+    embedding = encodeText(data["text"])
     return jsonify({"embedding": embedding}), 201
     
     
