@@ -13,9 +13,9 @@ CORS(app)
 def create_embeddings():
     data = request.json
     if not data or "text" not in data:
-        return jsonify({"error": "No text to encode"}), 401
+        return jsonify({"error": "No text to encode"}), 400
     if not isinstance(data["text"], str):
-        return jsonify({"error": "Text must be a string"}), 401
+        return jsonify({"error": "Text must be a string"}), 400
     embedding = encodeText(data["text"])
     return jsonify({"embedding": embedding}), 201
     
