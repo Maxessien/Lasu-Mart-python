@@ -3,7 +3,7 @@ import pymongo
 from pymongo import MongoClient
 from FlagEmbedding import FlagAutoModel
 try:
-    uri = "mongodb+srv://essienmax484_db_user:mygyPYVjRrfBRaGO@lasumart.jjokloj.mongodb.net/?retryWrites=true&w=majority&appName=LasuMart"
+    uri = "<mongodbUri>"
     client = MongoClient(uri)
     database = client["test"]
     collection = database["products"]
