@@ -1,6 +1,9 @@
 from  flask import Flask, request, jsonify
 from flask_cors import CORS
-from embeddingModel import encodeText
+from FlagEmbedding import FlagAutoModel
+
+model = FlagAutoModel.from_finetuned('BAAI/bge-small-en-v1.5')
+
 
 
 
@@ -16,8 +19,8 @@ def create_embeddings():
         return jsonify({"error": "No text to encode"}), 400
     if not isinstance(data["text"], str):
         return jsonify({"error": "Text must be a string"}), 400
-    embedding = encodeText(data["text"])
-    return jsonify({"embedding": embedding}), 201
+    embedding = embedding = model.encode(data["text"])
+    return jsonify({"embedding": embedding[0]}), 201
     
     
     

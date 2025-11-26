@@ -1,6 +1,6 @@
 from FlagEmbedding import FlagAutoModel
 
-model = FlagAutoModel.from_finetuned('BAAI/bge-base-en-v1.5')
+model = FlagAutoModel.from_finetuned('BAAI/bge-small-en-v1.5')
 
 
 

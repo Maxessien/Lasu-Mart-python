@@ -1,15 +1,14 @@
-
 import pymongo
 from pymongo import MongoClient
 from FlagEmbedding import FlagAutoModel
 try:
-    uri = "<mongodbUri>"
+    uri = "mongodb+srv://essienmax484_db_user:mygyPYVjRrfBRaGO@lasumart.jjokloj.mongodb.net/?retryWrites=true&w=majority&appName=LasuMart"
     client = MongoClient(uri)
     database = client["test"]
     collection = database["products"]
 
     products = collection.find({"vectorRepresentation": []})
-    model = FlagAutoModel.from_finetuned('BAAI/bge-base-en-v1.5')
+    model = FlagAutoModel.from_finetuned('BAAI/bge-small-en-v1.5')
     track = 0
     for product in products:
         text = f"{product['name']}. {product['description']}. Price: {product['price']}. Category: {product['category']}"
@@ -18,6 +17,7 @@ try:
         vector = embedding[0].tolist()
         collection.update_one({"productId": product["productId"]}, {"$set": {"vectorRepresentation": vector}})
         track+=1
+    print("Task completed", track)
     client.close()
 except Exception as e:
     raise Exception(
