@@ -60,6 +60,3 @@ class TfidfModel:
         embeddings = self.model.transform([text]) if isinstance(text, str) else self.model.transform(text)
 
         return embeddings.toarray().tolist()
-
-
-tfidf_model = TfidfModel()

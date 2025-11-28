@@ -1,12 +1,12 @@
 from  flask import Flask, request, jsonify
 from flask_cors import CORS
 #from FlagEmbedding import FlagAutoModel
-from TfidfModel import tfidf_model
+from tfidfModel import TfidfModel
 
 # model = FlagAutoModel.from_finetuned('BAAI/bge-small-en-v1.5')
 
 
-model = tfidf_model()
+model = TfidfModel()
 
 
 
