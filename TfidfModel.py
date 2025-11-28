@@ -27,10 +27,10 @@ def fetch_products(filters={}):
 class TfidfModel:
     def __init__(self):
         try:
-            products = fetch_products()
+            products_list = fetch_products()
             
             #format documents
-            products = [f"{product['name']} {product['description']} {product['price']} {product['category']}" for product in cursor]
+            products = [f"{product['name']} {product['description']} {product['price']} {product['category']}" for product in products_list]
             # Initialize TF-IDF
             vectorizer = TfidfVectorizer()
 
