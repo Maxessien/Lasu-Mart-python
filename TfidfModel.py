@@ -62,4 +62,4 @@ class TfidfModel:
         return embeddings.toarray().tolist()
 
 
-model = TfidfModel()
+tfidf_model = TfidfModel()
