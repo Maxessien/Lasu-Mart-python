@@ -1,9 +1,12 @@
 from  flask import Flask, request, jsonify
 from flask_cors import CORS
 from FlagEmbedding import FlagAutoModel
+from TfidfModel import tfidf_model
 
-model = FlagAutoModel.from_finetuned('BAAI/bge-small-en-v1.5')
+# model = FlagAutoModel.from_finetuned('BAAI/bge-small-en-v1.5')
 
+
+model = tfidf_model()
 
 
 
@@ -19,13 +22,10 @@ def create_embeddings():
         return jsonify({"error": "No text to encode"}), 400
     if not isinstance(data["text"], str):
         return jsonify({"error": "Text must be a string"}), 400
-    embedding = embedding = model.encode(data["text"])
+    embedding = model.encode(data["text"])
     return jsonify({"embedding": embedding[0]}), 201
     
     
-    
-    
-
 
 
 if __name__ == "__main__":
