@@ -30,7 +30,7 @@ class TfidfModel:
             products_list = fetch_products()
             
             #format documents
-            products = [f"{product['name']} {product['description']} {product['price']} {product['category']}" for product in products_list]
+            products = [f"{product['name']} {product['description']} {product['category']}" for product in products_list]
             # Initialize TF-IDF
             vectorizer = TfidfVectorizer()
 
