@@ -1,27 +1,9 @@
 import joblib
-import pymongo
-import os
-from pymongo import MongoClient
 from sklearn.feature_extraction.text import TfidfVectorizer
+from utils import fetch_products
 
 
 
-
-
-def fetch_products(filters={}):
-    try:
-        uri = os.environ.get("MONGO_URI")
-        client = MongoClient(uri)
-        database = client["test"]
-        collection = database["products"]
-        cursor = collection.find(filters)
-        products = list(cursor)
-        # Close mongodb connection
-        client.close()
-        return products
-    except Exception as e:
-        print("An error has occured", e)
-        raise Exception(e)
 
 
 class TfidfModel:
@@ -35,7 +17,7 @@ class TfidfModel:
             vectorizer = TfidfVectorizer()
 
             # Fit
-            tfidf_matrix = vectorizer.fit(products)
+            vectorizer.fit(products)
 
             # Save
             joblib.dump(vectorizer, "tfidf_model.pkl")
