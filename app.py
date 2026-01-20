@@ -1,3 +1,7 @@
+from dotenv import load_dotenv
+
+load_dotenv()
+
 from  flask import Flask, request, jsonify
 from flask_cors import CORS
 #from FlagEmbedding import FlagAutoModel
@@ -26,7 +30,10 @@ def create_embeddings():
     embedding = model.encode(data["text"])
     return jsonify({"embedding": embedding[0]}), 201
     
-    
+
+@app.route("/api/new", methods=["POST"])
+def add_new_prod():
+    model.train()
 
 
 
