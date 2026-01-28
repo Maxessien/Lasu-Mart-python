@@ -34,6 +34,7 @@ def create_embeddings():
 @app.route("/api/new", methods=["POST"])
 def add_new_prod():
     model.train()
+    return jsonify({"success": True}), 200
 
 
 
