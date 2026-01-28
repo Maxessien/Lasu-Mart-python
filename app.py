@@ -1,4 +1,4 @@
-from dotenv import load_dotenv
+from python-dotenv import load_dotenv
 
 load_dotenv()
 
