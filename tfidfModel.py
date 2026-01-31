@@ -11,6 +11,8 @@ class TfidfModel:
 
     def train(self):
         products_list = fetch_products()
+        if(not products_list or len(products_list) <= 0 or not isinstance(products_list, (list or tuple))):
+            return
         products = [
             f"{product['product_name']} {product['description']} {product['category']}"
             for product in products_list
