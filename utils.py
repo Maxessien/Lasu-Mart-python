@@ -3,7 +3,7 @@ import psycopg
 from psycopg.rows import dict_row
 from psycopg.connection import Cursor
 
-def connection_wrapper(callback: function) -> dict:
+def connection_wrapper(callback) -> dict:
     conn = psycopg.connect(os.environ.get("POSTGRESQL_CONNECTION_URL"), row_factory=dict_row)
     cbValue = callback(conn.cursor())
     conn.close()
