@@ -19,6 +19,10 @@ app = Flask(__name__)
 
 CORS(app)
 
+@app.route("/api/ping")
+def ping():
+    return jsonify({"active": True}), 200
+
 
 @app.route("/api/embeddings", methods=["POST"])
 def create_embeddings():
