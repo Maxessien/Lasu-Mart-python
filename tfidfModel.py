@@ -22,14 +22,19 @@ class TfidfModel:
         new_dimensions = len(self.vectorizer.vocabulary_)
         print(new_dimensions)
         
-        # Alter table with proper transaction handling
-        def alter_table(cur: Cursor):
+        # Clear embeddings and alter table in a single transaction
+        def clear_and_alter(cur: Cursor):
+            cur.execute("UPDATE products SET embedding = NULL")
             cur.execute(
                 f"ALTER TABLE products ALTER COLUMN embedding TYPE VECTOR({new_dimensions})"
             )
             cur.connection.commit()
         
-        connection_wrapper(alter_table)
+        try:
+            connection_wrapper(clear_and_alter)
+        except Exception as e:
+            print(f"Error clearing embeddings and altering table: {e}")
+            return
         
         # Insert embeddings with proper parameterized queries
         for product in products_list:
@@ -59,9 +64,16 @@ class TfidfModel:
             isinstance(value, str) for value in text
         ):
             raise TypeError("Text list can only contain strings")
-        model: TfidfVectorizer = joblib.load("tfidf_model.pkl")
-        embeddings = (
-            model.transform([text]) if isinstance(text, str) else model.transform(text)
-        )
-
-        return embeddings.toarray().tolist()
+        
+        try:
+            model: TfidfVectorizer = joblib.load("tfidf_model.pkl")
+            embeddings = (
+                model.transform([text]) if isinstance(text, str) else model.transform(text)
+            )
+            return embeddings.toarray().tolist()
+        except FileNotFoundError:
+            print("Error: tfidf_model.pkl not found")
+            return [None]
+        except Exception as e:
+            print(f"Error loading or using tfidf_model.pkl: {e}")
+            return None
